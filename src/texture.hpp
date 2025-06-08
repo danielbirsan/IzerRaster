@@ -9,7 +9,7 @@ public:
     std::vector<uint32_t> pixels;   // ARGB8 pe CPU
     uint32_t*          device = nullptr;      // pointer în VRAM (cudaMalloc)
 
-    explicit Texture(const std::string& filename);
+    explicit Texture(const std::string& filename, bool uploadToGPU = true);
     ~Texture();
 
     // copierea nu are sens (ar dubla cudaMalloc); o interzicem

@@ -1268,7 +1268,7 @@ std::vector<InputEvent> Renderer2D::poolInputEvents()
 // TEXTURĂ: încarcă din disc + upload pe GPU                            
 Texture* Renderer2D::loadTexture(const std::string& path)
 {
-    currentTex = new Texture(path);             // ① încarcă în RAM & VRAM
+    currentTex = new Texture(path, useGPU);     // ① încarcă în RAM și opțional în VRAM
 
     if (useGPU) {                               // ② trimite către kernel
         uploadTexture(currentTex->device, currentTex->w, currentTex->h);
@@ -1288,9 +1288,12 @@ Texture* Renderer2D::loadTexture(const std::string& path)
 void Renderer2D::setTexture(Texture* t)
 {
     currentTex = t;
-    if (useGPU)
+    if (useGPU) {
         uploadTexture(t->device, t->w, t->h);
-        setTexturing(true);   
+        setTexturing(true);
+    } else {
+        setTexturing(false);
+    }
 }
 
 
